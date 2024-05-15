@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Feedback App</string>
+    <string name="tell_us_a_bit_about_your_learners_english_proficiency">Tell us a bit about your learners English proficiency</string>
+    <string name="home_content">Feedback is critical for your learner to improve. It is mandatory to give atleast two feedbacks for regular session</string>
 </resources>
