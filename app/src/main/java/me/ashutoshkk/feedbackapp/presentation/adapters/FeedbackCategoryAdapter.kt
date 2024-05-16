@@ -55,7 +55,7 @@ class FeedbackCategoryAdapter :
                     currentList[adapterPosition].isOpen = true
                 }
             }
-            binding.tvCategoryTitle.text = feedbackCategory.category.name
+            binding.tvCategoryTitle.text = feedbackCategory.category.value
             val adapter = FeedbackItemsAdapter()
             binding.rvFeedbackItems.adapter = adapter
             binding.rvFeedbackItems.layoutManager = GridLayoutManager(binding.root.context, 2, GridLayoutManager.VERTICAL, false)
