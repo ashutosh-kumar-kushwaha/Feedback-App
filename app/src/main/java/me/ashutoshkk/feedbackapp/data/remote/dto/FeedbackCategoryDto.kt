@@ -1,6 +1,6 @@
 package me.ashutoshkk.feedbackapp.data.remote.dto
 
-data class FeedbackCategory(
+data class FeedbackCategoryDto(
     val categoryName: String,
     val feedbackItems: List<FeedbackItemDto>
 )

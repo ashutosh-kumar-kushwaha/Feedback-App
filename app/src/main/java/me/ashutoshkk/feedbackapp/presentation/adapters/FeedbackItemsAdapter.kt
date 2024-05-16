@@ -8,9 +8,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import me.ashutoshkk.feedbackapp.R
 import me.ashutoshkk.feedbackapp.databinding.FeedbackItemBinding
+import me.ashutoshkk.feedbackapp.domain.model.Feedback
 import me.ashutoshkk.feedbackapp.domain.model.FeedbackItem
 
-class FeedbackItemsAdapter(private val onFeedbackSelect: (Feedback) -> Unit) :
+class FeedbackItemsAdapter :
     ListAdapter<FeedbackItem, FeedbackItemsAdapter.FeedbackItemViewHolder>(object :
         ItemCallback<FeedbackItem>() {
         override fun areItemsTheSame(oldItem: FeedbackItem, newItem: FeedbackItem): Boolean {
@@ -28,12 +29,12 @@ class FeedbackItemsAdapter(private val onFeedbackSelect: (Feedback) -> Unit) :
             binding.cvNegative.setOnClickListener {
                 binding.cvNegative.setCardBackgroundColor(ContextCompat.getColor(it.context, R.color.persian_green))
                 binding.cvPositive.setCardBackgroundColor(ContextCompat.getColor(it.context, R.color.gray_extra_light))
-                onFeedbackSelect(Feedback.SCOPE_OF_IMPROVEMENT)
+                currentList[adapterPosition].selectedFeedback = Feedback.SCOPE_OF_IMPROVEMENT
             }
             binding.cvPositive.setOnClickListener {
                 binding.cvPositive.setCardBackgroundColor(ContextCompat.getColor(it.context, R.color.persian_green))
                 binding.cvNegative.setCardBackgroundColor(ContextCompat.getColor(it.context, R.color.gray_extra_light))
-                onFeedbackSelect(Feedback.DID_WELL)
+                currentList[adapterPosition].selectedFeedback = Feedback.DID_WELL
             }
         }
     }
@@ -45,8 +46,4 @@ class FeedbackItemsAdapter(private val onFeedbackSelect: (Feedback) -> Unit) :
     override fun onBindViewHolder(holder: FeedbackItemViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
-}
-
-enum class Feedback{
-    DID_WELL, SCOPE_OF_IMPROVEMENT, NONE
 }

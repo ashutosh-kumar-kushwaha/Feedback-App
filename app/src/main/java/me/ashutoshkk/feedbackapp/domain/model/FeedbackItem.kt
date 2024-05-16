@@ -6,5 +6,5 @@ data class FeedbackItem(
     val aspect: String,
     val didWell: List<String>,
     val scopeOfImprovement: List<String>,
-    val selectedFeedback: Feedback = Feedback.NONE
+    var selectedFeedback: Feedback = Feedback.NONE
 )
