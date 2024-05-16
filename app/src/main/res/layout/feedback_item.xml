@@ -1,70 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    app:cardCornerRadius="16dp"
-    app:cardBackgroundColor="@color/white"
-    app:strokeWidth="0dp"
-    app:cardElevation="4dp">
-    <androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="32dp">
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:strokeWidth="0dp">
 
-        <TextView
-            android:id="@+id/tv_aspect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Eye Contact"
-            android:textSize="14sp"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cv_positive"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:cardBackgroundColor="@color/persian_green"
-            app:cardCornerRadius="40dp"
-            app:strokeWidth="0dp"
-            android:layout_marginTop="32dp"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="@id/tv_aspect"
-            app:layout_constraintEnd_toStartOf="@id/cv_negative"
-            app:layout_constraintTop_toBottomOf="@id/tv_aspect">
-        <ImageView
-            android:id="@+id/iv_positive"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="2dp"
-            android:contentDescription="@string/scope_of_improvement"
-            android:src="@drawable/positive_emoji"/>
-        </com.google.android.material.card.MaterialCardView>
+            android:padding="32dp">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cv_negative"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:cardCornerRadius="40dp"
-            app:strokeWidth="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
-            app:cardBackgroundColor="@color/gray_extra_light"
-            app:layout_constraintStart_toEndOf="@id/cv_positive"
-            app:layout_constraintEnd_toEndOf="@id/tv_aspect"
-            app:layout_constraintTop_toBottomOf="@id/tv_aspect">
-            <ImageView
-                android:id="@+id/iv_negative"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="2dp"
-                android:contentDescription="@string/scope_of_improvement"
-                android:src="@drawable/negative_emoji"/>
-        </com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:id="@+id/tv_aspect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Eye Contact" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_positive"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="32dp"
+                app:cardBackgroundColor="@color/persian_green"
+                app:cardCornerRadius="40dp"
+                app:layout_constraintEnd_toStartOf="@id/cv_negative"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="@id/tv_aspect"
+                app:layout_constraintTop_toBottomOf="@id/tv_aspect"
+                app:strokeWidth="0dp">
+
+                <ImageView
+                    android:id="@+id/iv_positive"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/scope_of_improvement"
+                    android:padding="2dp"
+                    android:src="@drawable/positive_emoji" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_negative"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                app:cardBackgroundColor="@color/gray_extra_light"
+                app:cardCornerRadius="40dp"
+                app:layout_constraintEnd_toEndOf="@id/tv_aspect"
+                app:layout_constraintStart_toEndOf="@id/cv_positive"
+                app:layout_constraintTop_toBottomOf="@id/tv_aspect"
+                app:strokeWidth="0dp">
+
+                <ImageView
+                    android:id="@+id/iv_negative"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/scope_of_improvement"
+                    android:padding="2dp"
+                    android:src="@drawable/negative_emoji" />
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

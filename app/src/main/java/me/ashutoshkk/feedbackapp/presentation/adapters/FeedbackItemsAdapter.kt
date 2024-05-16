@@ -2,13 +2,15 @@ package me.ashutoshkk.feedbackapp.presentation.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import me.ashutoshkk.feedbackapp.data.remote.dto.FeedbackItem
-import me.ashutoshkk.feedbackapp.databinding.FeedbackCategoryItemBinding
+import me.ashutoshkk.feedbackapp.R
+import me.ashutoshkk.feedbackapp.databinding.FeedbackItemBinding
+import me.ashutoshkk.feedbackapp.domain.model.FeedbackItem
 
-class FeedbackItemsAdapter :
+class FeedbackItemsAdapter(private val onFeedbackSelect: (Feedback) -> Unit) :
     ListAdapter<FeedbackItem, FeedbackItemsAdapter.FeedbackItemViewHolder>(object :
         ItemCallback<FeedbackItem>() {
         override fun areItemsTheSame(oldItem: FeedbackItem, newItem: FeedbackItem): Boolean {
@@ -19,18 +21,32 @@ class FeedbackItemsAdapter :
             return oldItem == newItem
         }
     }) {
-    inner class FeedbackItemViewHolder(private val binding: FeedbackCategoryItemBinding) :
+    inner class FeedbackItemViewHolder(private val binding: FeedbackItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(feedbackItem: FeedbackItem){
-
+            binding.tvAspect.text = feedbackItem.aspect
+            binding.cvNegative.setOnClickListener {
+                binding.cvNegative.setCardBackgroundColor(ContextCompat.getColor(it.context, R.color.persian_green))
+                binding.cvPositive.setCardBackgroundColor(ContextCompat.getColor(it.context, R.color.gray_extra_light))
+                onFeedbackSelect(Feedback.SCOPE_OF_IMPROVEMENT)
+            }
+            binding.cvPositive.setOnClickListener {
+                binding.cvPositive.setCardBackgroundColor(ContextCompat.getColor(it.context, R.color.persian_green))
+                binding.cvNegative.setCardBackgroundColor(ContextCompat.getColor(it.context, R.color.gray_extra_light))
+                onFeedbackSelect(Feedback.DID_WELL)
+            }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedbackItemViewHolder {
-        return FeedbackItemViewHolder(FeedbackCategoryItemBinding.inflate(LayoutInflater.from(parent.context)))
+        return FeedbackItemViewHolder(FeedbackItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
     override fun onBindViewHolder(holder: FeedbackItemViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
+}
+
+enum class Feedback{
+    DID_WELL, SCOPE_OF_IMPROVEMENT, NONE
 }
