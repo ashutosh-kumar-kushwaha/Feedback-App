@@ -64,9 +64,4 @@ dependencies {
 
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
-
-//    implementation(libs.kotlinx.coroutines.android)
-//    implementation (libs.kotlinx.coroutines.core) // Check for the latest version
-
-
 }

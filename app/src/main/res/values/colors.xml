@@ -9,4 +9,6 @@
     <color name="whitef4">#f4f4f4</color>
     <color name="whitef7">#f7f7f7</color>
     <color name="green_light">#6fc295</color>
+    <color name="light_green">#a1bdae</color>
+    <color name="green_extra_light">#d9e4de</color>
 </resources>

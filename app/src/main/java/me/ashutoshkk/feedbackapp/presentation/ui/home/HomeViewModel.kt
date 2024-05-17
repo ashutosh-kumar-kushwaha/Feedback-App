@@ -38,7 +38,8 @@ class HomeViewModel @Inject constructor(private val getFeedbackDataUseCase: GetF
     private val _error: Channel<String> = Channel()
     val error get() = _error.receiveAsFlow()
 
-
+    var submitEnabled: Boolean = false
+        private set
 
     init {
         getFeedbackData()
@@ -57,10 +58,15 @@ class HomeViewModel @Inject constructor(private val getFeedbackDataUseCase: GetF
                 }
 
                 is Resource.Error -> {
+                    _isLoading.send(false)
                     _error.send(it.message!!)
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    fun setSubmitEnabled(enabled: Boolean) {
+        submitEnabled = enabled
     }
 
 }

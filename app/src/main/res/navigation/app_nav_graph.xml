@@ -9,5 +9,14 @@
         android:id="@+id/homeFragment"
         android:name="me.ashutoshkk.feedbackapp.presentation.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_thankYouFragment"
+            app:destination="@id/thankYouFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/thankYouFragment"
+        tools:layout="@layout/fragment_thank_you"
+        android:name="me.ashutoshkk.feedbackapp.presentation.ui.thankYou.ThankYouFragment"
+        android:label="ThankYouFragment" />
 </navigation>
