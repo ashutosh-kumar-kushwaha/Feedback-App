@@ -9,4 +9,6 @@
     <string name="done">Done</string>
     <string name="cross">cross</string>
     <string name="write_anything_else_here">Write anything else here</string>
+    <string name="submit">Submit</string>
+    <string name="note_for_regular_sessions_there_should_be_at_least_one_feedback_in_each_category">Note: For regular sessions, there should be at least one feedback in each category.</string>
 </resources>
