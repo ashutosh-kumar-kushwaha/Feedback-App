@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import me.ashutoshkk.feedbackapp.R
+import me.ashutoshkk.feedbackapp.common.Utils.clearItemDecorations
+import me.ashutoshkk.feedbackapp.common.Utils.dpToPx
 import me.ashutoshkk.feedbackapp.databinding.FeedbackCategoryItemBinding
 import me.ashutoshkk.feedbackapp.domain.model.Category
 import me.ashutoshkk.feedbackapp.domain.model.FeedbackCategory
@@ -58,6 +60,9 @@ class FeedbackCategoryAdapter(val list: MutableList<FeedbackCategory>) :
             binding.rvFeedbackItems.adapter = adapter
             binding.rvFeedbackItems.layoutManager =
                 GridLayoutManager(binding.root.context, 2, GridLayoutManager.VERTICAL, false)
+            val itemDecoration = FeedbackSpacingItemDecoration(2, binding.root.context.dpToPx(24f), binding.root.context.dpToPx(24f))
+            binding.rvFeedbackItems.clearItemDecorations()
+            binding.rvFeedbackItems.addItemDecoration(itemDecoration)
         }
 
     }

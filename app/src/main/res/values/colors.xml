@@ -6,4 +6,6 @@
     <color name="gray_light">#737373</color>
     <color name="persian_green">#289664</color>
     <color name="gray_extra_light">#d2e6dc</color>
+    <color name="whitef4">#f4f4f4</color>
+    <color name="whitef7">#f7f7f7</color>
 </resources>

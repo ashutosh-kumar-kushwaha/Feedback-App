@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import me.ashutoshkk.feedbackapp.R
 import me.ashutoshkk.feedbackapp.databinding.FragmentHomeBinding
 import me.ashutoshkk.feedbackapp.presentation.adapters.FeedbackCategoryAdapter
+import me.ashutoshkk.feedbackapp.presentation.adapters.FeedbackSpacingItemDecoration
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -42,8 +43,6 @@ class HomeFragment : Fragment() {
             Log.d("Ashu", it.toString())
             feedbackCategoryAdapter = FeedbackCategoryAdapter(it.toMutableList())
             binding.rvFeedback.adapter = feedbackCategoryAdapter
-//            feedbackCategoryAdapter.submitList(it)
-//            feedbackCategoryAdapter.notifyDataSetChanged()
         }
 
     }
