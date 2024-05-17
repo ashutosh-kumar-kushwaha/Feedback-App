@@ -48,6 +48,12 @@ class FeedbackCategoryAdapter(
                 }
                 notifyItemChanged(adapterPosition)
             }
+            if(feedbackCategory.isOpen){
+                binding.ivArrow.rotation = 90f
+            }
+            else{
+                binding.ivArrow.rotation = 0f
+            }
             if (feedbackCategory.category != Category.OTHER) {
                 if (feedbackCategory.isOpen) {
                     binding.rvFeedbackItems.visibility = RecyclerView.VISIBLE
@@ -71,13 +77,14 @@ class FeedbackCategoryAdapter(
                 binding.rvFeedbackItems.adapter = adapter
                 binding.rvFeedbackItems.layoutManager =
                     GridLayoutManager(binding.root.context, 2, GridLayoutManager.VERTICAL, false)
-                val itemDecoration = FeedbackSpacingItemDecoration(
-                    2,
-                    binding.root.context.dpToPx(24f),
-                    binding.root.context.dpToPx(24f)
-                )
                 binding.rvFeedbackItems.clearItemDecorations()
-                binding.rvFeedbackItems.addItemDecoration(itemDecoration)
+                binding.rvFeedbackItems.addItemDecoration(
+                    FeedbackSpacingItemDecoration(
+                        2,
+                        binding.root.context.dpToPx(24f),
+                        binding.root.context.dpToPx(24f)
+                    )
+                )
                 binding.etFeedback.visibility = View.GONE
             } else {
                 binding.rvFeedbackItems.visibility = View.GONE
@@ -115,11 +122,6 @@ class FeedbackCategoryAdapter(
     }
 
     override fun onBindViewHolder(holder: FeedbackViewHolder, position: Int) {
-        if (list[position].category == Category.OTHER) {
-
-        } else {
-
-        }
         holder.bind(list[position])
     }
 }
