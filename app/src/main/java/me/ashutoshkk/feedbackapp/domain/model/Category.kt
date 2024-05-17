@@ -5,7 +5,8 @@ enum class Category(val value: String) {
     GRAMMAR("Grammar"),
     FLUENCY_AND_VOCABULARY("Fluency And Vocabulary"),
     PRONUNCIATION("Pronunciation"),
-    OTHER("Other")
+    OTHER("Other"),
+    UNSPECIFIED("Unspecified"),
 }
 
 fun getCategoryFromString(value: String): Category {
@@ -14,5 +15,5 @@ fun getCategoryFromString(value: String): Category {
             return category
         }
     }
-    return Category.OTHER
+    return Category.UNSPECIFIED
 }

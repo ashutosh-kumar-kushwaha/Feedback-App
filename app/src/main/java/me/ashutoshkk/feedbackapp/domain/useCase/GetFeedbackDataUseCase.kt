@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import me.ashutoshkk.feedbackapp.common.Resource
 import me.ashutoshkk.feedbackapp.data.remote.dto.toFeedbackCategory
+import me.ashutoshkk.feedbackapp.domain.model.Category
 import me.ashutoshkk.feedbackapp.domain.model.FeedbackCategory
 import me.ashutoshkk.feedbackapp.domain.repository.FeedbackRepository
 import retrofit2.HttpException
@@ -14,8 +15,9 @@ class GetFeedbackDataUseCase @Inject constructor(private val repository: Feedbac
     operator fun invoke(): Flow<Resource<List<FeedbackCategory>>> = flow {
         emit(Resource.Loading())
         try {
-            val data = repository.getFeedbackData()
-            emit(Resource.Success(data.feedbackCategories.map { it.toFeedbackCategory() }))
+            val data = repository.getFeedbackData().feedbackCategories.map { it.toFeedbackCategory() }.toMutableList()
+            data.add(FeedbackCategory(Category.OTHER, emptyList()))
+            emit(Resource.Success(data))
         } catch (e: HttpException) {
             emit(
                 Resource.Error(

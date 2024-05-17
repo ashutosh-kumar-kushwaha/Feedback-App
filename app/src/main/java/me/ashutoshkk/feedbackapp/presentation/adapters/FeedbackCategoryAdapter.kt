@@ -1,6 +1,7 @@
 package me.ashutoshkk.feedbackapp.presentation.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,10 +20,6 @@ class FeedbackCategoryAdapter(val list: MutableList<FeedbackCategory>, private v
 
         private lateinit var adapter: FeedbackItemsAdapter
 
-        fun notify(position: Int) {
-            adapter.notifyItemChanged(position)
-        }
-
         fun bind(feedbackCategory: FeedbackCategory) {
             binding.ivCategoryIcon.setImageResource(
                 when (feedbackCategory.category) {
@@ -30,7 +27,8 @@ class FeedbackCategoryAdapter(val list: MutableList<FeedbackCategory>, private v
                     Category.GRAMMAR -> R.drawable.grammar
                     Category.FLUENCY_AND_VOCABULARY -> R.drawable.fluency
                     Category.PRONUNCIATION -> R.drawable.pronunciation
-                    Category.OTHER -> R.drawable.pronunciation
+                    Category.OTHER -> R.drawable.others
+                    Category.UNSPECIFIED -> R.drawable.others
                 }
             )
             binding.llCategory.setOnClickListener {
@@ -47,24 +45,35 @@ class FeedbackCategoryAdapter(val list: MutableList<FeedbackCategory>, private v
                 }
                 notifyItemChanged(adapterPosition)
             }
-            if (feedbackCategory.isOpen) {
-                binding.rvFeedbackItems.visibility = RecyclerView.VISIBLE
-            } else {
-                binding.rvFeedbackItems.visibility = RecyclerView.GONE
+            if(feedbackCategory.category != Category.OTHER){
+                if (feedbackCategory.isOpen) {
+                    binding.rvFeedbackItems.visibility = RecyclerView.VISIBLE
+                } else {
+                    binding.rvFeedbackItems.visibility = RecyclerView.GONE
+                }
+                adapter =
+                    FeedbackItemsAdapter(feedbackCategory.feedbackItems.toMutableList()) { feedback, position ->
+                        list[adapterPosition].feedbackItems[position].selectedFeedback = feedback
+                        adapter.list[position] = list[adapterPosition].feedbackItems[position]
+                        onFeedbackClick(feedback, adapterPosition, position)
+                    }
+                binding.rvFeedbackItems.adapter = adapter
+                binding.rvFeedbackItems.layoutManager =
+                    GridLayoutManager(binding.root.context, 2, GridLayoutManager.VERTICAL, false)
+                val itemDecoration = FeedbackSpacingItemDecoration(2, binding.root.context.dpToPx(24f), binding.root.context.dpToPx(24f))
+                binding.rvFeedbackItems.clearItemDecorations()
+                binding.rvFeedbackItems.addItemDecoration(itemDecoration)
+                binding.etFeedback.visibility = View.GONE
+            }
+            else{
+                binding.rvFeedbackItems.visibility = View.GONE
+                if (feedbackCategory.isOpen) {
+                    binding.etFeedback.visibility = RecyclerView.VISIBLE
+                } else {
+                    binding.etFeedback.visibility = RecyclerView.GONE
+                }
             }
             binding.tvCategoryTitle.text = feedbackCategory.category.value
-            adapter =
-                FeedbackItemsAdapter(feedbackCategory.feedbackItems.toMutableList()) { feedback, position ->
-                    list[adapterPosition].feedbackItems[position].selectedFeedback = feedback
-                    adapter.list[position] = list[adapterPosition].feedbackItems[position]
-                    onFeedbackClick(feedback, adapterPosition, position)
-                }
-            binding.rvFeedbackItems.adapter = adapter
-            binding.rvFeedbackItems.layoutManager =
-                GridLayoutManager(binding.root.context, 2, GridLayoutManager.VERTICAL, false)
-            val itemDecoration = FeedbackSpacingItemDecoration(2, binding.root.context.dpToPx(24f), binding.root.context.dpToPx(24f))
-            binding.rvFeedbackItems.clearItemDecorations()
-            binding.rvFeedbackItems.addItemDecoration(itemDecoration)
         }
 
     }
@@ -84,6 +93,12 @@ class FeedbackCategoryAdapter(val list: MutableList<FeedbackCategory>, private v
     }
 
     override fun onBindViewHolder(holder: FeedbackViewHolder, position: Int) {
+        if(list[position].category == Category.OTHER){
+
+        }
+        else{
+
+        }
         holder.bind(list[position])
     }
 }
