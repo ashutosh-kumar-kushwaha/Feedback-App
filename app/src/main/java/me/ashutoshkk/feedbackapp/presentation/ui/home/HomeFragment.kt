@@ -32,7 +32,6 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-
         return binding.root
     }
 
@@ -40,8 +39,9 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.live.observe(viewLifecycleOwner) {
-            Log.d("Ashu", it.toString())
-            feedbackCategoryAdapter = FeedbackCategoryAdapter(it.toMutableList())
+            feedbackCategoryAdapter = FeedbackCategoryAdapter(it.toMutableList()){ feedback, i, j ->
+                viewModel.onFeedbackChanged(feedback, i, j)
+            }
             binding.rvFeedback.adapter = feedbackCategoryAdapter
         }
 

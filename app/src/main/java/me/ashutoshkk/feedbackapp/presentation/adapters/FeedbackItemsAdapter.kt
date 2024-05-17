@@ -11,7 +11,7 @@ import me.ashutoshkk.feedbackapp.domain.model.FeedbackItem
 
 class FeedbackItemsAdapter(
     val list: MutableList<FeedbackItem>,
-    private val onItemClick: (Feedback, Int) -> Unit
+    private val onFeedbackClick: (Feedback, Int) -> Unit
 ) :
     RecyclerView.Adapter<FeedbackItemsAdapter.FeedbackItemViewHolder>() {
     inner class FeedbackItemViewHolder(private val binding: FeedbackItemBinding) :
@@ -31,7 +31,7 @@ class FeedbackItemsAdapter(
                         R.color.gray_extra_light
                     )
                 )
-                onItemClick(Feedback.SCOPE_OF_IMPROVEMENT, adapterPosition)
+                onFeedbackClick(Feedback.SCOPE_OF_IMPROVEMENT, adapterPosition)
             }
             binding.cvPositive.setOnClickListener {
                 binding.cvPositive.setCardBackgroundColor(
@@ -46,7 +46,7 @@ class FeedbackItemsAdapter(
                         R.color.gray_extra_light
                     )
                 )
-                onItemClick(Feedback.DID_WELL, adapterPosition)
+                onFeedbackClick(Feedback.DID_WELL, adapterPosition)
             }
 
             if (feedbackItem.selectedFeedback == Feedback.DID_WELL) {

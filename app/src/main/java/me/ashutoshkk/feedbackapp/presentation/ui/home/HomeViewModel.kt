@@ -56,20 +56,19 @@ class HomeViewModel @Inject constructor(private val getFeedbackDataUseCase: GetF
         }.launchIn(viewModelScope)
     }
 
-    fun onItemClick(position: Int) {
-        val data = feedbackData[position]
-        feedbackData[position] = data.copy(isOpen = !data.isOpen)
-        _feedbackCategories.value = feedbackData.toList()
-        live.postValue(feedbackData.toList())
-        Log.d("Ashu", "update")
-    }
-
     fun onFeedbackChanged(feedback: Feedback, i: Int, j: Int) {
-        val data = feedbackData[i].feedbackItems[j]
-        val updatedData = data.copy(selectedFeedback = feedback)
-        val feedbackItems = feedbackData[i].feedbackItems.toMutableList()
-        feedbackItems[j] = updatedData
-        feedbackData[i] = feedbackData[i].copy(feedbackItems = feedbackItems)
-        live.postValue(feedbackData)
+        when(feedback){
+            Feedback.DID_WELL -> {
+                if(feedbackData[i].feedbackItems[j].didWell.size > 1){
+
+                }
+            }
+            Feedback.SCOPE_OF_IMPROVEMENT -> {
+                if(feedbackData[i].feedbackItems[j].scopeOfImprovement.size > 1){
+
+                }
+            }
+            Feedback.NONE -> {}
+        }
     }
 }

@@ -5,4 +5,7 @@
     <string name="icon">Icon</string>
     <string name="arrow">Arrow</string>
     <string name="scope_of_improvement">Scope of Improvement</string>
+    <string name="choose_specifics">Choose Specifics</string>
+    <string name="done">Done</string>
+    <string name="cross">cross</string>
 </resources>

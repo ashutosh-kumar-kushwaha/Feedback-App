@@ -9,9 +9,10 @@ import me.ashutoshkk.feedbackapp.common.Utils.clearItemDecorations
 import me.ashutoshkk.feedbackapp.common.Utils.dpToPx
 import me.ashutoshkk.feedbackapp.databinding.FeedbackCategoryItemBinding
 import me.ashutoshkk.feedbackapp.domain.model.Category
+import me.ashutoshkk.feedbackapp.domain.model.Feedback
 import me.ashutoshkk.feedbackapp.domain.model.FeedbackCategory
 
-class FeedbackCategoryAdapter(val list: MutableList<FeedbackCategory>) :
+class FeedbackCategoryAdapter(val list: MutableList<FeedbackCategory>, private val onFeedbackClick: (Feedback, Int, Int) -> Unit) :
     RecyclerView.Adapter<FeedbackCategoryAdapter.FeedbackViewHolder>() {
     inner class FeedbackViewHolder(private val binding: FeedbackCategoryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -56,6 +57,7 @@ class FeedbackCategoryAdapter(val list: MutableList<FeedbackCategory>) :
                 FeedbackItemsAdapter(feedbackCategory.feedbackItems.toMutableList()) { feedback, position ->
                     list[adapterPosition].feedbackItems[position].selectedFeedback = feedback
                     adapter.list[position] = list[adapterPosition].feedbackItems[position]
+                    onFeedbackClick(feedback, adapterPosition, position)
                 }
             binding.rvFeedbackItems.adapter = adapter
             binding.rvFeedbackItems.layoutManager =
