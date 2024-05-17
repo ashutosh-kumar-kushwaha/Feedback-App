@@ -6,11 +6,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import me.ashutoshkk.feedbackapp.common.Resource
 import me.ashutoshkk.feedbackapp.domain.model.Feedback
@@ -28,9 +32,13 @@ class HomeViewModel @Inject constructor(private val getFeedbackDataUseCase: GetF
     )
     val feedbackCategories: StateFlow<List<FeedbackCategory>> get() = _feedbackCategories.asStateFlow()
 
-    val live: MutableLiveData<List<FeedbackCategory>> = MutableLiveData()
+    private val _isLoading: Channel<Boolean> = Channel()
+    val isLoading get() = _isLoading.receiveAsFlow()
 
-    private lateinit var feedbackData: MutableList<FeedbackCategory>
+    private val _error: Channel<String> = Channel()
+    val error get() = _error.receiveAsFlow()
+
+
 
     init {
         getFeedbackData()
@@ -40,35 +48,19 @@ class HomeViewModel @Inject constructor(private val getFeedbackDataUseCase: GetF
         getFeedbackDataUseCase().onEach {
             when (it) {
                 is Resource.Loading -> {
-
+                    _isLoading.send(true)
                 }
 
                 is Resource.Success -> {
-                    feedbackData = it.data!!.toMutableList()
-                    _feedbackCategories.value = feedbackData
-                    live.postValue(feedbackData)
+                    _isLoading.send(false)
+                    _feedbackCategories.value = it.data!!
                 }
 
                 is Resource.Error -> {
-
+                    _error.send(it.message!!)
                 }
             }
         }.launchIn(viewModelScope)
     }
 
-    fun onFeedbackChanged(feedback: Feedback, i: Int, j: Int) {
-        when(feedback){
-            Feedback.DID_WELL -> {
-                if(feedbackData[i].feedbackItems[j].didWell.size > 1){
-
-                }
-            }
-            Feedback.SCOPE_OF_IMPROVEMENT -> {
-                if(feedbackData[i].feedbackItems[j].scopeOfImprovement.size > 1){
-
-                }
-            }
-            Feedback.NONE -> {}
-        }
-    }
 }

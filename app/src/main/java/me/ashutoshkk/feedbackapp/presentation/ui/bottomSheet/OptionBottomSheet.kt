@@ -1,4 +1,4 @@
-package me.ashutoshkk.feedbackapp.presentation.ui.home
+package me.ashutoshkk.feedbackapp.presentation.ui.bottomSheet
 
 import android.os.Bundle
 import android.view.LayoutInflater
