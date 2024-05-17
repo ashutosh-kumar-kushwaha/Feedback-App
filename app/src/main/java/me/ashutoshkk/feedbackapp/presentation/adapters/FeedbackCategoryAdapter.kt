@@ -13,7 +13,10 @@ import me.ashutoshkk.feedbackapp.domain.model.Category
 import me.ashutoshkk.feedbackapp.domain.model.Feedback
 import me.ashutoshkk.feedbackapp.domain.model.FeedbackCategory
 
-class FeedbackCategoryAdapter(val list: MutableList<FeedbackCategory>, private val onFeedbackClick: (Feedback, Int, Int) -> Unit) :
+class FeedbackCategoryAdapter(
+    val list: MutableList<FeedbackCategory>,
+    private val onFeedbackClick: (Feedback, Int, Int) -> Unit
+) :
     RecyclerView.Adapter<FeedbackCategoryAdapter.FeedbackViewHolder>() {
     inner class FeedbackViewHolder(private val binding: FeedbackCategoryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -45,7 +48,7 @@ class FeedbackCategoryAdapter(val list: MutableList<FeedbackCategory>, private v
                 }
                 notifyItemChanged(adapterPosition)
             }
-            if(feedbackCategory.category != Category.OTHER){
+            if (feedbackCategory.category != Category.OTHER) {
                 if (feedbackCategory.isOpen) {
                     binding.rvFeedbackItems.visibility = RecyclerView.VISIBLE
                 } else {
@@ -56,16 +59,27 @@ class FeedbackCategoryAdapter(val list: MutableList<FeedbackCategory>, private v
                         list[adapterPosition].feedbackItems[position].selectedFeedback = feedback
                         adapter.list[position] = list[adapterPosition].feedbackItems[position]
                         onFeedbackClick(feedback, adapterPosition, position)
+                        val feedbackCount =
+                            feedbackCategory.feedbackItems.count { it.selectedFeedback != Feedback.NONE }
+                        if (feedbackCount > 0) {
+                            binding.tvFeedbackCount.text = feedbackCount.toString()
+                            binding.tvFeedbackCount.visibility = View.VISIBLE
+                        } else {
+                            binding.tvFeedbackCount.visibility = View.GONE
+                        }
                     }
                 binding.rvFeedbackItems.adapter = adapter
                 binding.rvFeedbackItems.layoutManager =
                     GridLayoutManager(binding.root.context, 2, GridLayoutManager.VERTICAL, false)
-                val itemDecoration = FeedbackSpacingItemDecoration(2, binding.root.context.dpToPx(24f), binding.root.context.dpToPx(24f))
+                val itemDecoration = FeedbackSpacingItemDecoration(
+                    2,
+                    binding.root.context.dpToPx(24f),
+                    binding.root.context.dpToPx(24f)
+                )
                 binding.rvFeedbackItems.clearItemDecorations()
                 binding.rvFeedbackItems.addItemDecoration(itemDecoration)
                 binding.etFeedback.visibility = View.GONE
-            }
-            else{
+            } else {
                 binding.rvFeedbackItems.visibility = View.GONE
                 if (feedbackCategory.isOpen) {
                     binding.etFeedback.visibility = RecyclerView.VISIBLE
@@ -74,6 +88,14 @@ class FeedbackCategoryAdapter(val list: MutableList<FeedbackCategory>, private v
                 }
             }
             binding.tvCategoryTitle.text = feedbackCategory.category.value
+            val feedbackCount =
+                feedbackCategory.feedbackItems.count { it.selectedFeedback != Feedback.NONE }
+            if (feedbackCount > 0) {
+                binding.tvFeedbackCount.text = feedbackCount.toString()
+                binding.tvFeedbackCount.visibility = View.VISIBLE
+            } else {
+                binding.tvFeedbackCount.visibility = View.GONE
+            }
         }
 
     }
@@ -93,10 +115,9 @@ class FeedbackCategoryAdapter(val list: MutableList<FeedbackCategory>, private v
     }
 
     override fun onBindViewHolder(holder: FeedbackViewHolder, position: Int) {
-        if(list[position].category == Category.OTHER){
+        if (list[position].category == Category.OTHER) {
 
-        }
-        else{
+        } else {
 
         }
         holder.bind(list[position])
