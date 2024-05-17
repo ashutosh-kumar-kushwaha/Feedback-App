@@ -1,6 +1,5 @@
 package me.ashutoshkk.feedbackapp.presentation.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
@@ -32,12 +31,11 @@ class FeedbackCategoryAdapter(val list: MutableList<FeedbackCategory>) :
                 }
             )
             binding.llCategory.setOnClickListener {
-                if(list[adapterPosition].isOpen){
+                if (list[adapterPosition].isOpen) {
                     list[adapterPosition].isOpen = false
-                }
-                else{
-                    for(i in list.indices){
-                        if(i != adapterPosition && list[i].isOpen){
+                } else {
+                    for (i in list.indices) {
+                        if (i != adapterPosition && list[i].isOpen) {
                             list[i].isOpen = false
                             notifyItemChanged(i)
                         }
@@ -45,8 +43,6 @@ class FeedbackCategoryAdapter(val list: MutableList<FeedbackCategory>) :
                     list[adapterPosition].isOpen = true
                 }
                 notifyItemChanged(adapterPosition)
-//                Log.d("Ashu", "Click")
-//                onItemClick(adapterPosition)
             }
             if (feedbackCategory.isOpen) {
                 binding.rvFeedbackItems.visibility = RecyclerView.VISIBLE
@@ -54,13 +50,11 @@ class FeedbackCategoryAdapter(val list: MutableList<FeedbackCategory>) :
                 binding.rvFeedbackItems.visibility = RecyclerView.GONE
             }
             binding.tvCategoryTitle.text = feedbackCategory.category.value
-            adapter = FeedbackItemsAdapter(feedbackCategory.feedbackItems.toMutableList()) { feedback, position ->
-//                onFeedbackClick(feedback, adapterPosition, position)
-                list[adapterPosition].feedbackItems[position].selectedFeedback = feedback
-                adapter.list[position] = list[adapterPosition].feedbackItems[position]
-                adapter.notifyItemChanged(position)
-//                adapter.submitList(list[adapterPosition].feedbackItems)
-            }
+            adapter =
+                FeedbackItemsAdapter(feedbackCategory.feedbackItems.toMutableList()) { feedback, position ->
+                    list[adapterPosition].feedbackItems[position].selectedFeedback = feedback
+                    adapter.list[position] = list[adapterPosition].feedbackItems[position]
+                }
             binding.rvFeedbackItems.adapter = adapter
             binding.rvFeedbackItems.layoutManager =
                 GridLayoutManager(binding.root.context, 2, GridLayoutManager.VERTICAL, false)

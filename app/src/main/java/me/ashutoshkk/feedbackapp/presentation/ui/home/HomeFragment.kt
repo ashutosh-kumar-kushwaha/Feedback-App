@@ -31,13 +31,6 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-//        lifecycleScope.launch {
-//            viewModel.feedbackCategories.collectLatest {
-//                Log.d("Ashu", it.toString())
-//                feedbackCategoryAdapter.submitList(it)
-//            }
-//        }
-
 
         return binding.root
     }
