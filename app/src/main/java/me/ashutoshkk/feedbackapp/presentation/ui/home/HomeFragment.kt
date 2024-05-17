@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import me.ashutoshkk.feedbackapp.R
 import me.ashutoshkk.feedbackapp.databinding.FragmentHomeBinding
+import me.ashutoshkk.feedbackapp.domain.model.Feedback
 import me.ashutoshkk.feedbackapp.presentation.adapters.FeedbackCategoryAdapter
 import me.ashutoshkk.feedbackapp.presentation.adapters.FeedbackSpacingItemDecoration
 
@@ -25,6 +26,8 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var feedbackCategoryAdapter: FeedbackCategoryAdapter
+
+    private lateinit var optionBottomSheet: OptionBottomSheet
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +43,29 @@ class HomeFragment : Fragment() {
 
         viewModel.live.observe(viewLifecycleOwner) {
             feedbackCategoryAdapter = FeedbackCategoryAdapter(it.toMutableList()){ feedback, i, j ->
-                viewModel.onFeedbackChanged(feedback, i, j)
+
+                val list = feedbackCategoryAdapter.list
+                when(feedback){
+                    Feedback.DID_WELL -> {
+                        if(list[i].feedbackItems[j].didWell.size > 1){
+                            optionBottomSheet = OptionBottomSheet(list[i].feedbackItems[j].didWell){
+                                feedbackCategoryAdapter.list[i].feedbackItems[j].didWell = it
+//                                feedbackCategoryAdapter.notifyItemChanged(i)
+                            }
+                            optionBottomSheet.show(parentFragmentManager, "BottomSheet")
+                        }
+                    }
+                    Feedback.SCOPE_OF_IMPROVEMENT -> {
+                        if(list[i].feedbackItems[j].scopeOfImprovement.size > 1){
+                            optionBottomSheet = OptionBottomSheet(list[i].feedbackItems[j].scopeOfImprovement){
+                                feedbackCategoryAdapter.list[i].feedbackItems[j].scopeOfImprovement = it
+//                                feedbackCategoryAdapter.notifyItemChanged(i)
+                            }
+                            optionBottomSheet.show(parentFragmentManager, "BottomSheet")
+                        }
+                    }
+                    Feedback.NONE -> {}
+                }
             }
             binding.rvFeedback.adapter = feedbackCategoryAdapter
         }
